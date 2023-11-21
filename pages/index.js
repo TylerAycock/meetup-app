@@ -1,23 +1,24 @@
+
 import MeetupList from "../components/meetups/MeetupList"
 
 const Dummy_Meetups = [
     {
         id: 'm1',
-        title: 'first meetup',
+        title: 'First meetup',
         image: 'https://picsum.photos/200',
         address: 'Some Address 5, 12345 Some City',
         description: 'This is our first meetUp'
     },
     {
         id: 'm2',
-        title: 'second meetup',
+        title: 'Second meetup',
         image: 'https://picsum.photos/200',
         address: 'Some Address 5, 12345 Some City',
         description: 'This is our first meetUp'
     },
     {
         id: 'm3',
-        title: 'first meetup',
+        title: 'Third meetup',
         image: 'https://picsum.photos/200',
         address: 'Some Address 5, 12345 Some City',
         description: 'This is our first meetUp'
@@ -25,8 +26,8 @@ const Dummy_Meetups = [
 ]
 
 const HomePage = () => {
-    return(
-        <MeetupList meetups={Dummy_Meetups}/>
+    return (
+        <MeetupList meetups={Dummy_Meetups} />
     )
 }
 
