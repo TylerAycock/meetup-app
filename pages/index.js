@@ -25,10 +25,36 @@ const Dummy_Meetups = [
     }
 ]
 
-const HomePage = () => {
+const HomePage = (props) => {
+
     return (
-        <MeetupList meetups={Dummy_Meetups} />
+        <MeetupList meetups={props.meetups} />
     )
 }
+
+export async function getStaticProps(){
+    //code written here is never accessed on the client side since it is only used in the build form 
+    //you can do things such as fetch data from an api 
+    return {
+        props: {
+            meetups: Dummy_Meetups
+        },
+        revalidate: 10
+        //revaildate will refresh the server side info every designated time you put in in seconds 
+        //ensuring the data is always up to date
+    }
+}
+
+// export async function getServerSideProps(context){
+//     //this will not run during the build process but ALWAYS on the server after deployment
+//     //context gives you access to more data which you can manipulate below in the request and response
+//     const req = context.reg;
+//     const res = context.res
+//     return{
+//         props: {
+//             meetups: Dummy_Meetups
+//         }
+//     }
+// }
 
 export default HomePage
