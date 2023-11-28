@@ -3,8 +3,8 @@ import NewMeetupForm from "@/components/meetups/NewMeetupForm"
 
 const NewMeetUpPage = () => {
 
-    const addMeetUpHandler = (meetUpData) => {
-        console.log(meetUpData)
+    async function addMeetUpHandler(meetUpData) {
+        const response = await fetch('/api/new-meetup')
     }
     return <NewMeetupForm onAddMeetup={addMeetUpHandler} />
 }

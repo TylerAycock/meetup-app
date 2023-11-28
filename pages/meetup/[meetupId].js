@@ -15,6 +15,8 @@ const MeetUpDetails = () => {
     )
 }
 
+
+// this is hard coded as an example but in general will be dynamically generated 
 export async function getStaticPaths() {
     return {
         paths: [
