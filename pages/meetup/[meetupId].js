@@ -1,16 +1,16 @@
 //we can connect this to an actual backend which allows you to make a pull request and then display specific data 
 //this page is pulled up from the meetup item component when a user clicks the buttons activating the router functionality with its pull request 
-import { MongoClient } from "mongodb"
+import { MongoClient, ObjectId } from "mongodb"
 import MeetupDetail from "@/components/meetups/MeetupDetail"
 
-const MeetUpDetails = () => {
-
+const MeetUpDetails = (props) => {
+    // const {image,title,address, description} = props.data
     return (
         <MeetupDetail
-            image="https://picsum.photos/800/500"
-            title="First Meet Up"
-            address='Some Street 5, 12345 Some City'
-            description='This is a first meet up'
+            image={props.image}
+            title={props.title}
+            address={props.address}
+            description={props.description}
         />
     )
 }
@@ -27,7 +27,7 @@ export async function getStaticPaths() {
 
     const meetups = await meetupsCollection.find({}, { _id: 1 }).toArray()
 
-    console.log(meetups)
+    // console.log(meetups)
 
     client.close()
 
@@ -45,19 +45,26 @@ export async function getStaticProps(context) {
     //fetch the unique id
     const meetupId = context.params.meetupId
 
+    //convert the meetupId to an ObjectId
+    // const id = new ObjectId(meetupId.toString())
 
-//connect to the db
+    //connect to the db
     const client = await MongoClient.connect(
         'mongodb+srv://tyleraycock:rTs2dS6aWCj0WAiP@cluster0.afuimig.mongodb.net/meetups?retryWrites=true&w=majority'
     );
     const db = client.db()
 
     const meetupsCollection = db.collection('meetups')
-    const selectedMeetup = meetupsCollection.findOne({})
-    
 
-    return{
+    const selectedMeetup = await meetupsCollection.findOne({ _id: meetupId})
 
+    console.log(`meetup ID: ${meetupId}`)
+    console.log(`selected meetup: ${selectedMeetup}`)
+
+    return {
+        props: {
+            meetupData: selectedMeetup
+        }
     }
 
 }
