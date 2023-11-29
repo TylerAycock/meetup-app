@@ -15,7 +15,7 @@ const NewMeetUpPage = () => {
         })
         const data = await response.json();
 
-        console.log(data)
+        // console.log(data)
 
         router.push('/')
     }

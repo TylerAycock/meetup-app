@@ -40,9 +40,7 @@ export async function getStaticProps() {
         'mongodb+srv://tyleraycock:rTs2dS6aWCj0WAiP@cluster0.afuimig.mongodb.net/meetups?retryWrites=true&w=majority'
     );
     const db = client.db()
-
-    const meetupsCollection = db.collection('meetups') //can name this whatever you want 
-
+    const meetupsCollection = db.collection('meetups') 
     const meetups = await meetupsCollection.find().toArray()
 
     // console.log(meetups)
