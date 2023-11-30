@@ -4,13 +4,14 @@ import { MongoClient, ObjectId } from "mongodb"
 import MeetupDetail from "@/components/meetups/MeetupDetail"
 
 const MeetUpDetails = (props) => {
-    // const {image,title,address, description} = props.data
+
+    const { image, title, address, description } = props.meetupData.data
     return (
         <MeetupDetail
-            image={props.image}
-            title={props.title}
-            address={props.address}
-            description={props.description}
+            image={image}
+            title={title}
+            address={address}
+            description={description}
         />
     )
 }
@@ -42,11 +43,12 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
+
     //fetch the unique id
     const meetupId = context.params.meetupId
 
     //convert the meetupId to an ObjectId
-    // const id = new ObjectId(meetupId.toString())
+    const id = new ObjectId(meetupId.toString())
 
     //connect to the db
     const client = await MongoClient.connect(
@@ -56,14 +58,26 @@ export async function getStaticProps(context) {
 
     const meetupsCollection = db.collection('meetups')
 
-    const selectedMeetup = await meetupsCollection.findOne({ _id: meetupId})
 
+    //finding the selected ID 
+    const selectedMeetup = await meetupsCollection.findOne({ _id: id })
+
+     // Convert ObjectId to string 
+
+    const serializedMeetupData = {
+        ...selectedMeetup,
+        _id: selectedMeetup._id.toString(),
+    };
+
+    console.log(selectedMeetup)
     console.log(`meetup ID: ${meetupId}`)
-    console.log(`selected meetup: ${selectedMeetup}`)
+    console.log(serializedMeetupData)
+
+    client.close()
 
     return {
         props: {
-            meetupData: selectedMeetup
+            meetupData: serializedMeetupData
         }
     }
 
