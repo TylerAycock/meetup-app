@@ -2,17 +2,27 @@
 //this page is pulled up from the meetup item component when a user clicks the buttons activating the router functionality with its pull request 
 import { MongoClient, ObjectId } from "mongodb"
 import MeetupDetail from "@/components/meetups/MeetupDetail"
+import Head from "next/head"
 
 const MeetUpDetails = (props) => {
 
     const { image, title, address, description } = props.meetupData.data
     return (
-        <MeetupDetail
-            image={image}
-            title={title}
-            address={address}
-            description={description}
-        />
+        <>
+            <Head>
+                <title>{title}</title>
+                <meta
+                    name="description"
+                    content={description}
+                />
+            </Head>
+            <MeetupDetail
+                image={image}
+                title={title}
+                address={address}
+                description={description}
+            />
+        </>
     )
 }
 
@@ -62,16 +72,16 @@ export async function getStaticProps(context) {
     //finding the selected ID 
     const selectedMeetup = await meetupsCollection.findOne({ _id: id })
 
-     // Convert ObjectId to string 
+    // Convert ObjectId to string 
 
     const serializedMeetupData = {
         ...selectedMeetup,
         _id: selectedMeetup._id.toString(),
     };
 
-    console.log(selectedMeetup)
-    console.log(`meetup ID: ${meetupId}`)
-    console.log(serializedMeetupData)
+    // console.log(selectedMeetup)
+    // console.log(`meetup ID: ${meetupId}`)
+    // console.log(serializedMeetupData)
 
     client.close()
 

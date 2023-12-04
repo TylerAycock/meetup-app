@@ -1,5 +1,6 @@
 import { MongoClient } from "mongodb"
 import MeetupList from "../components/meetups/MeetupList"
+import Head from "next/head"
 
 // const Dummy_Meetups = [
 //     {
@@ -28,7 +29,13 @@ import MeetupList from "../components/meetups/MeetupList"
 const HomePage = (props) => {
 
     return (
-        <MeetupList meetups={props.meetups} />
+        <>
+            <Head>
+                <title>NextJS Meetups</title>
+                <meta name="description" content="Browse a huge list of highly active React meetups!" />
+            </Head>
+            <MeetupList meetups={props.meetups} />
+        </>
     )
 }
 
@@ -40,7 +47,7 @@ export async function getStaticProps() {
         'mongodb+srv://tyleraycock:rTs2dS6aWCj0WAiP@cluster0.afuimig.mongodb.net/meetups?retryWrites=true&w=majority'
     );
     const db = client.db()
-    const meetupsCollection = db.collection('meetups') 
+    const meetupsCollection = db.collection('meetups')
     const meetups = await meetupsCollection.find().toArray()
 
     // console.log(meetups)
